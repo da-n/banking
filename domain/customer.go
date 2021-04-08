@@ -7,19 +7,14 @@ import (
 
 type Customer struct {
 	Id          string `db:"customer_id"`
-	Name        string
-	City        string
-	Zipcode     string
+	Name        string `db:"name"`
+	City        string `db:"city"`
+	Zipcode     string `db:"zipcode"`
 	DateOfBirth string `db:"date_of_birth"`
-	Status      string
+	Status      string `db:"status"`
 }
 
-type CustomerRepository interface {
-	FindAll(string) ([]Customer, *errs.AppError)
-	ById(string) (*Customer, *errs.AppError)
-}
-
-func (c Customer) statusAsText() string  {
+func (c Customer) statusAsText() string {
 	statusAsText := "active"
 	if c.Status == "0" {
 		statusAsText = "inactive"
@@ -28,7 +23,7 @@ func (c Customer) statusAsText() string  {
 	return statusAsText
 }
 
-func (c Customer) ToDto() dto.CustomerResponse {
+func (c Customer) ToNewCustomerResponseDto() dto.CustomerResponse {
 	return dto.CustomerResponse{
 		Id:          c.Id,
 		Name:        c.Name,
@@ -37,4 +32,9 @@ func (c Customer) ToDto() dto.CustomerResponse {
 		DateOfBirth: c.DateOfBirth,
 		Status:      c.statusAsText(),
 	}
+}
+
+type CustomerRepository interface {
+	FindAll(string) ([]Customer, *errs.AppError)
+	ById(string) (*Customer, *errs.AppError)
 }

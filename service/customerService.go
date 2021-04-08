@@ -29,7 +29,7 @@ func (s DefaultCustomerService) GetAllCustomer(status string) ([]dto.CustomerRes
 	}
 	response := make([]dto.CustomerResponse, 0)
 	for _, c := range customers {
-		response = append(response, c.ToDto())
+		response = append(response, c.ToNewCustomerResponseDto())
 	}
 	return response, nil
 }
@@ -39,7 +39,7 @@ func (s DefaultCustomerService) GetCustomer(id string) (*dto.CustomerResponse, *
 	if err != nil {
 		return nil, err
 	}
-	response := c.ToDto()
+	response := c.ToNewCustomerResponseDto()
 	return &response, nil
 }
 
