@@ -1,8 +1,8 @@
 package domain
 
 import (
+	"github.com/da-n/banking-lib/errs"
 	"github.com/da-n/banking/dto"
-	"github.com/da-n/banking/errs"
 )
 
 type Customer struct {

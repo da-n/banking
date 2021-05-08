@@ -2,8 +2,8 @@ package domain
 
 import (
 	"database/sql"
-	"github.com/da-n/banking/errs"
-	"github.com/da-n/banking/logger"
+	"github.com/da-n/banking-lib/errs"
+	"github.com/da-n/banking-lib/logger"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )

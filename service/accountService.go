@@ -1,12 +1,15 @@
 package service
 
 import (
+	"github.com/da-n/banking-lib/errs"
 	"github.com/da-n/banking/domain"
 	"github.com/da-n/banking/dto"
-	"github.com/da-n/banking/errs"
 	"time"
 )
 
+const dbTSLayout = "2006-01-02 15:04:05"
+
+//go:generate mockgen -destination=../mocks/service/mockAccountService.go -package=service github.com/da-n/banking/service AccountService
 type AccountService interface {
 	NewAccount(dto.NewAccountRequest) (*dto.NewAccountResponse, *errs.AppError)
 	MakeTransaction(dto.TransactionRequest) (*dto.TransactionResponse, *errs.AppError)
@@ -21,14 +24,7 @@ func (s DefaultAccountService) NewAccount(req dto.NewAccountRequest) (*dto.NewAc
 	if err != nil {
 		return nil, err
 	}
-	a := domain.Account{
-		AccountId:   "",
-		CustomerId:  req.CustomerId,
-		OpeningDate: time.Now().Format("2006-01-02 15:04:05"),
-		AccountType: req.AccountType,
-		Amount:      req.Amount,
-		Status:      "1",
-	}
+	a := domain.NewAccount(req.CustomerId, req.AccountType, req.Amount)
 
 	newAccount, err := s.repo.Save(a)
 	if err != nil {

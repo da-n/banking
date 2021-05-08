@@ -1,8 +1,8 @@
 package domain
 
 import (
+	"github.com/da-n/banking-lib/errs"
 	"github.com/da-n/banking/dto"
-	"github.com/da-n/banking/errs"
 )
 
 const dbTSLayout = "2006-01-02 15:04:05"
@@ -20,6 +20,7 @@ func (a Account) ToNewAccountResponseDto() dto.NewAccountResponse {
 	return dto.NewAccountResponse{a.AccountId}
 }
 
+//go:generate mockgen -destination=../mocks/domain/mockAccountRepository.go -package=domain github.com/da-n/banking/domain AccountRepository
 type AccountRepository interface {
 	Save(account Account) (*Account, *errs.AppError)
 	SaveTransaction(transaction Transaction) (*Transaction, *errs.AppError)
